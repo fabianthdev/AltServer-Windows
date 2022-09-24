@@ -157,7 +157,7 @@ void ConnectionManager::StartAdvertising(int socketPort)
     DNSServiceRef service = NULL;
     uint16_t port = htons(socketPort);
     
-    DNSServiceErrorType registrationResult = DNSServiceRegister(&service, 0, 0, NULL, "_altserver._tcp", NULL, NULL, port, 0, NULL, ConnectionManagerBonjourRegistrationFinished, NULL);
+    //DNSServiceErrorType registrationResult = DNSServiceRegister(&service, 0, 0, NULL, "_altserver._tcp", NULL, NULL, port, 0, NULL, ConnectionManagerBonjourRegistrationFinished, NULL);
     if (registrationResult != kDNSServiceErr_NoError)
     {
         std::cout << "Bonjour Registration Error: " << registrationResult << std::endl;

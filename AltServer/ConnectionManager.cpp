@@ -143,12 +143,19 @@ void ConnectionManager::Listen()
         std::cout << "Failed to create socket." << std::endl;
         return;
     }
+
+	uint16_t port = 0;  // Default: Let the system choose a port for us.
+	auto const env_port = getenv("ALTSERVER_PORT");
+	if (env_port != NULL) {
+		port = atoi(env_port);
+	}
+	port = ntohs(port);
     
     struct sockaddr_in address4;
     memset(&address4, 0, sizeof(address4));
     //address4.sin_len = sizeof(address4);
     address4.sin_family = AF_INET;
-    address4.sin_port = 0; // Choose for us.
+    address4.sin_port = port;
     address4.sin_addr.s_addr = INADDR_ANY;
     
     if (bind(socket4, (struct sockaddr *)&address4, sizeof(address4)) < 0)
@@ -170,8 +177,7 @@ void ConnectionManager::Listen()
         std::cout << "Failed to get socket name." << std::endl;
     }
     
-    int port4 = ntohs(sin.sin_port);
-    this->StartAdvertising(port4);
+    // this->StartAdvertising(port);
     
     fd_set input_set;
     fd_set copy_set;
